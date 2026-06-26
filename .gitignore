@@ -1,0 +1,235 @@
+# =============================================================================
+# Monorepo: bookshelf-app (backend + mobile)
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Dependencies (any depth — backend/, mobile/, nested packages)
+# -----------------------------------------------------------------------------
+**/node_modules/
+node_modules/
+.pnp
+.pnp.js
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+**/.yarn/cache/
+**/.yarn/unplugged/
+**/.yarn/build-state.yml
+**/.yarn/install-state.gz
+.pnpm-store/
+**/.pnpm-store/
+
+# -----------------------------------------------------------------------------
+# Environment & secrets
+# -----------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+!.env*.example
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env*.example
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+!debug.keystore
+credentials.json
+service-account*.json
+
+# -----------------------------------------------------------------------------
+# Logs
+# -----------------------------------------------------------------------------
+logs/
+**/logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# -----------------------------------------------------------------------------
+# Runtime & cache
+# -----------------------------------------------------------------------------
+.cache/
+**/.cache/
+.temp/
+.tmp/
+**/.temp/
+**/.tmp/
+*.tmp
+*.temp
+.eslintcache
+.stylelintcache
+.parcel-cache/
+**/.parcel-cache/
+.turbo/
+.swc/
+**/.swc/
+
+# -----------------------------------------------------------------------------
+# Testing & coverage
+# -----------------------------------------------------------------------------
+coverage/
+**/coverage/
+.nyc_output/
+*.lcov
+.jest/
+
+# -----------------------------------------------------------------------------
+# Build outputs
+# -----------------------------------------------------------------------------
+dist/
+build/
+out/
+**/dist/
+**/build/
+.next/
+.nuxt/
+.output/
+*.tsbuildinfo
+
+# =============================================================================
+# Backend (Node.js / Express / Mongoose / Cloudinary)
+# =============================================================================
+backend/uploads/
+backend/temp/
+backend/tmp/
+backend/data/
+backend/*.local
+backend/.nodemonignore
+
+# MongoDB local dumps / seed artifacts
+**/dump/
+*.bson
+
+# =============================================================================
+# Mobile (React Native / Expo)
+# =============================================================================
+
+# Expo
+**/.expo/
+**/.expo-shared/
+**/web-build/
+**/dist-web/
+
+# Metro bundler
+**/.metro-health-check*
+
+# React Native packager
+**/.react-native/
+
+# TypeScript
+**/*.jsbundle
+
+# CocoaPods (iOS)
+**/ios/Pods/
+**/ios/build/
+**/ios/DerivedData/
+**/ios/*.xcuserstate
+**/ios/.xcode.env.local
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+**/xcuserdata/
+*.xccheckout
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Gradle / Android
+**/android/.gradle/
+**/android/app/build/
+**/android/build/
+**/android/local.properties
+**/android/.cxx/
+**/android/captures/
+**/android/app/release/
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Fastlane
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots/
+**/fastlane/test_output/
+
+# Buck
+**/.buckd/
+**/*.keystore
+!**/debug.keystore
+
+# Watchman
+**/.watchmanconfig
+
+# =============================================================================
+# OS files
+# =============================================================================
+
+# macOS
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# =============================================================================
+# IDEs & editors
+# =============================================================================
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+**/.vscode/*
+!**/.vscode/extensions.json
+!**/.vscode/settings.json
+!**/.vscode/tasks.json
+!**/.vscode/launch.json
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# Cursor
+.cursor/
+
+# =============================================================================
+# Misc
+# =============================================================================
+*.orig
+*.pid
+*.seed
+*.pid.lock
+.npm
+.yarn-integrity
