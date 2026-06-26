@@ -1,8 +1,10 @@
-import express from "express";
-import User from "../models/User.js";
+import express, { type Request, type Response } from "express";
 import jwt from "jsonwebtoken";
+import { type Types } from "mongoose";
+import User from "./models/User.js";
+import chalk from "chalk";
 
-function generateToken(userId) {
+function generateToken(userId: Types.ObjectId): string {
 	return jwt.sign({ userId: userId.toString() }, process.env.JWT_SECRET, {
 		expiresIn: "15d",
 	});
@@ -10,9 +12,14 @@ function generateToken(userId) {
 
 const router = express.Router();
 
-router.post("/register", async (req, res) => {
+router.post("/register", async (req: Request, res: Response) => {
 	try {
-		const { username, email, password } = req.body;
+		const { username, email, password } = req.body as {
+			username?: string;
+			email?: string;
+			password?: string;
+		};
+
 		if (!username || !email || !password) {
 			return res.status(400).json({
 				message: "Missing fields.",
@@ -39,7 +46,6 @@ router.post("/register", async (req, res) => {
 			});
 		}
 
-		// get random profile avatar
 		const profileImage = `https://api.dicebear.com/10.x/adventurer-neutral/svg?seed=${username}`;
 
 		const newUser = new User({
@@ -53,6 +59,12 @@ router.post("/register", async (req, res) => {
 
 		const token = generateToken(newUser._id);
 
+		console.log(chalk.cyan("--------------------------------"));
+		console.log(chalk.green("User created successfully."));
+		console.log(chalk.yellow("Token:"));
+		console.log(chalk.yellow(token));
+		console.log(chalk.blue("User data:"));
+		console.log(chalk.magenta(JSON.stringify(newUser, null, 2)));
 		res.status(201).json({
 			token,
 			user: {
@@ -68,9 +80,12 @@ router.post("/register", async (req, res) => {
 	}
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", async (req: Request, res: Response) => {
 	try {
-		const { email, password } = req.body;
+		const { email, password } = req.body as {
+			email?: string;
+			password?: string;
+		};
 
 		if (!email || !password) {
 			return res.status(400).json({
@@ -90,9 +105,15 @@ router.post("/login", async (req, res) => {
 			});
 		}
 
-		// generate and send the token back if the credentials are valid
 		const token = generateToken(user._id);
 
+		console.log(chalk.cyan("--------------------------------"));
+		console.log(chalk.green("Token generated successfully."));
+		console.log(chalk.yellow("Token:"));
+		console.log(chalk.yellow(token));
+		console.log(chalk.green("Login successful."));
+		console.log(chalk.blue("User data:"));
+		console.log(chalk.magenta(JSON.stringify(user, null, 2)));
 		res.status(200).json({
 			token,
 			user: {
