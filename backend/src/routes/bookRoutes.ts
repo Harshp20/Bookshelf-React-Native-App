@@ -86,6 +86,16 @@ router.delete(
 			}
 
 			await book.deleteOne();
+			if (book.image && book.image.includes("cloudinary")) {
+				try {
+					const publicId = book.image.split("/").pop()?.split(".")[0];
+					if (publicId) {
+						await cloudinary.uploader.destroy(publicId);
+					}
+				} catch (error) {
+					console.error(error);
+				}
+			}
 
 			res.status(200).json({ message: "Book deleted successfully." });
 		} catch (error) {
