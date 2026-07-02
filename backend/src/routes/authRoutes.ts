@@ -1,7 +1,7 @@
 import express, { type Request, type Response } from "express";
 import jwt from "jsonwebtoken";
 import { type Types } from "mongoose";
-import User from "./models/User.js";
+import User from "../models/User.js";
 import chalk from "chalk";
 
 function generateToken(userId: Types.ObjectId): string {

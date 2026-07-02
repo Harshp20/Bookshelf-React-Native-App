@@ -13,9 +13,8 @@ export interface IUserMethods {
 }
 
 type UserDocument = HydratedDocument<IUser, IUserMethods>;
-type UserModel = Model<IUser, Record<string, never>, IUserMethods>;
 
-const userSchema = new Schema<IUser, UserModel, IUserMethods>(
+const userSchema = new Schema<IUser, Model<IUser>, IUserMethods>(
 	{
 		username: {
 			type: String,
@@ -37,7 +36,7 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
 			default: "",
 		},
 	},
-	{ timestamps: false },
+	{ timestamps: true },
 );
 
 userSchema.pre("save", async function () {
@@ -54,6 +53,6 @@ userSchema.methods.comparePasswords = async function (
 	return bcrypt.compare(userPassword, this.password);
 };
 
-const User = mongoose.model<IUser, UserModel>("User", userSchema);
+const User = mongoose.model("User", userSchema);
 
 export default User;
