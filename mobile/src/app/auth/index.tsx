@@ -2,10 +2,7 @@ import {
 	Text,
 	View,
 	StyleSheet,
-	TextInput,
-	GestureResponderEvent,
 	TouchableOpacity,
-	ActivityIndicator,
 	KeyboardAvoidingView,
 	Platform,
 	ScrollView,
@@ -16,6 +13,7 @@ import { Ionicons } from "@react-native-vector-icons/ionicons";
 import COLORS from "@/constants/colors";
 import { Link } from "expo-router";
 import SubmitButton from "@/components/SubmitButton";
+import TextInputWithIcon from "@/components/TextInputWithIcon";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
@@ -49,47 +47,39 @@ const Login = () => {
 				<View style={styles.formSection}>
 					<View style={styles.form}>
 						<View style={styles.formFields}>
-							<View style={styles.textInputWithIcon}>
-								<Ionicons
-									name="mail-outline"
-									size={25}
-									color={COLORS.primary}
-								/>
-								<TextInput
-									value={email}
-									onChangeText={setEmail}
-									placeholder="Email"
-									style={styles.textInput}
-									placeholderTextColor={COLORS.placeholderText}
-									keyboardType="email-address"
-									autoCapitalize="none"
-								/>
-							</View>
+							<TextInputWithIcon
+								iconName="mail-outline"
+								iconSize={25}
+								iconColor={COLORS.primary}
+								value={email}
+								onChangeText={setEmail}
+								placeholder="Email"
+								placeholderTextColor={COLORS.placeholderText}
+								keyboardType="email-address"
+								autoCapitalize="none"
+							/>
 
-							<View style={styles.textInputWithIcon}>
-								<Ionicons
-									name="lock-closed-outline"
-									size={25}
-									color={COLORS.primary}
-								/>
-								<TextInput
-									value={password}
-									onChangeText={setPassword}
-									placeholder="Password"
-									style={styles.textInput}
-									placeholderTextColor={COLORS.placeholderText}
-									secureTextEntry={!showPassword}
-								/>
-								<TouchableOpacity
-									onPress={() => setShowPassword(!showPassword)}
-								>
-									<Ionicons
-										name={showPassword ? "eye-outline" : "eye-off-outline"}
-										size={25}
-										color={COLORS.primary}
-									/>
-								</TouchableOpacity>
-							</View>
+							<TextInputWithIcon
+								iconName="lock-closed-outline"
+								iconSize={25}
+								iconColor={COLORS.primary}
+								value={password}
+								onChangeText={setPassword}
+								placeholder="Password"
+								placeholderTextColor={COLORS.placeholderText}
+								secureTextEntry={!showPassword}
+								component={
+									<TouchableOpacity
+										onPress={() => setShowPassword(!showPassword)}
+									>
+										<Ionicons
+											name={showPassword ? "eye-outline" : "eye-off-outline"}
+											size={25}
+											color={COLORS.primary}
+										/>
+									</TouchableOpacity>
+								}
+							/>
 
 							<SubmitButton
 								isLoading={isLoading}
@@ -145,22 +135,6 @@ const styles = StyleSheet.create({
 	formFields: {
 		width: "100%",
 		gap: 24,
-	},
-	textInputWithIcon: {
-		flexDirection: "row",
-		borderRadius: 10,
-		borderWidth: 1,
-		borderColor: "#bbb",
-		width: "100%",
-		alignItems: "center",
-		paddingHorizontal: 10,
-		paddingVertical: 2,
-		justifyContent: "flex-start",
-		backgroundColor: "#fff",
-	},
-	textInput: {
-		flex: 1,
-		padding: 14,
 	},
 	submitButton: {
 		width: "100%",

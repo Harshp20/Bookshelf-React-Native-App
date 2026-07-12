@@ -1,17 +1,15 @@
 import SubmitButton from "@/components/SubmitButton";
+import TextInputWithIcon from "@/components/TextInputWithIcon";
 import COLORS from "@/constants/colors";
 import Ionicons from "@react-native-vector-icons/ionicons";
 import { Link } from "expo-router";
 import { useState } from "react";
 import {
-	ActivityIndicator,
-	GestureResponderEvent,
 	KeyboardAvoidingView,
 	Platform,
 	ScrollView,
 	StyleSheet,
 	Text,
-	TextInput,
 	TouchableOpacity,
 	View,
 } from "react-native";
@@ -54,64 +52,49 @@ const Signup = () => {
 							</Text>
 
 							{/* Inputs */}
-							<View style={styles.textInputWithIcon}>
-								<Ionicons
-									name="person-outline"
-									size={25}
-									color={COLORS.primary}
-								/>
-								<TextInput
-									value={username}
-									onChangeText={setUsername}
-									placeholder="Username"
-									style={styles.textInput}
-									placeholderTextColor={COLORS.placeholderText}
-									keyboardType="email-address"
-									autoCapitalize="none"
-								/>
-							</View>
+							<TextInputWithIcon
+								iconName="person-outline"
+								iconSize={25}
+								iconColor={COLORS.primary}
+								value={username}
+								onChangeText={setUsername}
+								placeholder="Username"
+								keyboardType="email-address"
+								autoCapitalize="none"
+							/>
 
-							<View style={styles.textInputWithIcon}>
-								<Ionicons
-									name="mail-outline"
-									size={25}
-									color={COLORS.primary}
-								/>
-								<TextInput
-									value={email}
-									onChangeText={setEmail}
-									placeholder="Email"
-									style={styles.textInput}
-									placeholderTextColor={COLORS.placeholderText}
-									keyboardType="email-address"
-									autoCapitalize="none"
-								/>
-							</View>
+							<TextInputWithIcon
+								iconName="mail-outline"
+								iconSize={25}
+								iconColor={COLORS.primary}
+								value={email}
+								onChangeText={setEmail}
+								placeholder="Email"
+								keyboardType="email-address"
+								autoCapitalize="none"
+							/>
 
-							<View style={styles.textInputWithIcon}>
-								<Ionicons
-									name="lock-closed-outline"
-									size={25}
-									color={COLORS.primary}
-								/>
-								<TextInput
-									value={password}
-									onChangeText={setPassword}
-									placeholder="Password"
-									style={styles.textInput}
-									placeholderTextColor={COLORS.placeholderText}
-									secureTextEntry={!showPassword}
-								/>
-								<TouchableOpacity
-									onPress={() => setShowPassword(!showPassword)}
-								>
-									<Ionicons
-										name={showPassword ? "eye-outline" : "eye-off-outline"}
-										size={25}
-										color={COLORS.primary}
-									/>
-								</TouchableOpacity>
-							</View>
+							<TextInputWithIcon
+								iconName="lock-closed-outline"
+								iconSize={25}
+								iconColor={COLORS.primary}
+								value={password}
+								onChangeText={setPassword}
+								placeholder="Password"
+								placeholderTextColor={COLORS.placeholderText}
+								secureTextEntry={!showPassword}
+								component={
+									<TouchableOpacity
+										onPress={() => setShowPassword(!showPassword)}
+									>
+										<Ionicons
+											name={showPassword ? "eye-outline" : "eye-off-outline"}
+											size={25}
+											color={COLORS.primary}
+										/>
+									</TouchableOpacity>
+								}
+							/>
 
 							<SubmitButton
 								isLoading={isLoading}
@@ -169,23 +152,6 @@ const styles = StyleSheet.create({
 		width: "100%",
 		gap: 24,
 	},
-	textInputWithIcon: {
-		flexDirection: "row",
-		borderRadius: 10,
-		borderWidth: 1,
-		borderColor: "#bbb",
-		width: "100%",
-		alignItems: "center",
-		paddingHorizontal: 10,
-		paddingVertical: 2,
-		justifyContent: "flex-start",
-		backgroundColor: "#fff",
-	},
-	textInput: {
-		flex: 1,
-		padding: 14,
-	},
-
 	footerText: {
 		flexDirection: "row",
 		color: "#999",
