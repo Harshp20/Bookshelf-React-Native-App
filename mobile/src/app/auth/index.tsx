@@ -1,4 +1,3 @@
-import SafeAreaScreen from "@/components/SafeAreaScreen";
 import {
 	Text,
 	View,
@@ -6,50 +5,50 @@ import {
 	TextInput,
 	GestureResponderEvent,
 	TouchableOpacity,
+	ActivityIndicator,
+	KeyboardAvoidingView,
+	Platform,
+	ScrollView,
 } from "react-native";
 import { Image } from "expo-image";
 import { useState } from "react";
 import { Ionicons } from "@react-native-vector-icons/ionicons";
 import COLORS from "@/constants/colors";
+import { Link } from "expo-router";
+import SubmitButton from "@/components/SubmitButton";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 
-	const handleSubmit = (e: GestureResponderEvent) => {
-		console.log(e);
+	const handleSubmit = () => {
+		setIsLoading(!isLoading);
 	};
 
 	return (
-		<SafeAreaScreen>
-			<View
-				style={{
-					flex: 1,
-					backgroundImage: "",
-				}}
+		<KeyboardAvoidingView
+			style={styles.screen}
+			behavior={Platform.OS === "ios" ? "padding" : undefined}
+		>
+			<ScrollView
+				contentContainerStyle={styles.scrollContent}
+				keyboardShouldPersistTaps="handled"
+				showsVerticalScrollIndicator={false}
 			>
-				{/* BG Image */}
-				<Image
-					style={styles.image}
-					source={require("../../../assets/images/i.png")}
-					placeholder={{ blurhash }}
-					contentFit="contain"
-					transition={500}
-				/>
+				<View style={{ flex: 1 }}>
+					<Image
+						style={styles.image}
+						source={require("../../../assets/images/i.png")}
+						placeholder={{ blurhash }}
+						contentFit="cover"
+					/>
+				</View>
 
-				{/* Login form */}
-				<View style={{ padding: 40, flex: 1 }}>
+				<View style={styles.formSection}>
 					<View style={styles.form}>
-						<View
-							style={{
-								flex: 1,
-								justifyContent: "space-around",
-								alignItems: "center",
-								width: "100%",
-							}}
-						>
-							{/* Email */}
+						<View style={styles.formFields}>
 							<View style={styles.textInputWithIcon}>
 								<Ionicons
 									name="mail-outline"
@@ -67,7 +66,6 @@ const Login = () => {
 								/>
 							</View>
 
-							{/* Password */}
 							<View style={styles.textInputWithIcon}>
 								<Ionicons
 									name="lock-closed-outline"
@@ -82,41 +80,36 @@ const Login = () => {
 									placeholderTextColor={COLORS.placeholderText}
 									secureTextEntry={!showPassword}
 								/>
-								{/* Password Show/Hide Icon */}
 								<TouchableOpacity
 									onPress={() => setShowPassword(!showPassword)}
 								>
-									{showPassword ? (
-										<Ionicons
-											name="eye-outline"
-											size={25}
-											color={COLORS.primary}
-										/>
-									) : (
-										<Ionicons
-											name="eye-off-outline"
-											size={25}
-											color={COLORS.primary}
-										/>
-									)}
+									<Ionicons
+										name={showPassword ? "eye-outline" : "eye-off-outline"}
+										size={25}
+										color={COLORS.primary}
+									/>
 								</TouchableOpacity>
 							</View>
 
-							{/* Submit */}
-							<TouchableOpacity
-								style={styles.submitButton}
-								onPress={handleSubmit}
-								accessibilityLabel="Submit login form"
-								activeOpacity={0.8}
-							>
-								<Text style={styles.submitButtonText}>Submit</Text>
-							</TouchableOpacity>
+							<SubmitButton
+								isLoading={isLoading}
+								label="Submit Sign In form"
+								title="Sign In"
+								submitHandler={handleSubmit}
+							/>
 						</View>
-						<Text style={styles.footerText}>2026 All Rights Reserved</Text>
+
+						{/* Footer */}
+						<View style={styles.footerText}>
+							<Text>Don't have an account? </Text>
+							<Link href={"/auth/signup"} style={styles.signUpText}>
+								Sign Up
+							</Link>
+						</View>
 					</View>
 				</View>
-			</View>
-		</SafeAreaScreen>
+			</ScrollView>
+		</KeyboardAvoidingView>
 	);
 };
 
@@ -124,6 +117,35 @@ const blurhash =
 	"|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
 
 const styles = StyleSheet.create({
+	screen: {
+		flex: 1,
+	},
+	scrollContent: {
+		backgroundColor: COLORS.background,
+		flex: 1,
+	},
+	image: {
+		flex: 1,
+	},
+	formSection: {
+		flex: 1,
+		padding: 40,
+	},
+	form: {
+		alignItems: "center",
+		borderRadius: 25,
+		padding: 40,
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.3,
+		shadowRadius: 10,
+		elevation: 8,
+		backgroundColor: "white",
+	},
+	formFields: {
+		width: "100%",
+		gap: 24,
+	},
 	textInputWithIcon: {
 		flexDirection: "row",
 		borderRadius: 10,
@@ -141,37 +163,26 @@ const styles = StyleSheet.create({
 		padding: 14,
 	},
 	submitButton: {
+		width: "100%",
 		backgroundColor: COLORS.primary,
 		paddingVertical: 12,
 		paddingHorizontal: 14,
 		borderRadius: 10,
 	},
-	submitButtonText: { color: "#fff", fontWeight: "bold", fontSize: 18 },
-	footerText: { color: "#999", padding: 20 },
-	form: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "space-around",
-		borderRadius: 25, // Replace with a numeric value for RN
-		padding: 40,
-		// Dropshadow in React Native
-		shadowColor: "#000",
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.3,
-		shadowRadius: 10,
-		elevation: 8, // For Android shadow
-		backgroundColor: "white",
+	submitButtonText: {
+		textAlign: "center",
+		color: "#fff",
+		fontWeight: "bold",
+		fontSize: 18,
 	},
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
+	footerText: {
+		flexDirection: "row",
+		color: "#999",
+		paddingTop: 20,
 	},
-	image: {
-		flex: 1,
-		width: "100%",
-		// backgroundColor: "#0553",
+	signUpText: {
+		color: COLORS.primary,
 	},
 });
+
 export default Login;
